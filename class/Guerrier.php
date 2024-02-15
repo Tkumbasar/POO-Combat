@@ -1,54 +1,14 @@
 <?php
 
-class FightsManager
+class Guerrier extends Hero
 {
-    public function createMonster() : Monster
+    protected int $manaCost = 50;
+    public function specialHit(Monster $monster) : int // Mon attaque spéciale si j'ai le mana
     {
-        $randomMonster = [
-          'Sorcier',
-          'Ogre',
-          'Fantassin'
-        ];
-
-        $monsterKey = array_rand($randomMonster);
-        $monsterType = $randomMonster[$monsterKey];
-
-        $monster = new $monsterType();
-        $monster->setName('Alexis');
-        return $monster;
+        $damage = rand(25, 50);
+        $this->setMana($this->getMana() - $this->manaCost);
+        $monster->setLifePoint($monster->getLifePoint() - $damage);
+        return $damage;
     }
-    public function fight(Hero $hero, Monster $monster) : array
-    {
-        $fightResult = [];
-
-        while($hero->getLifePoint() > 0 || $monster->getLifePoint() > 0) {
-
-            $fightResult[] = "<td class='bg-danger'>" . $monster->getName() . " inflige " . $monster->hit($hero) . " dégats à " . $hero->getName();
-
-            if($hero->getLifePoint() <= 0) {
-                $fightResult[] = "<td class='bg-info'>" . $hero->getName() . " est mort";
-                break;
-            }
-
-            if($hero->getMana() >= $hero->getManaCost()) {
-                $fightResult[] = "<td class='bg-info'>" . $hero->getName() . " inflige " . $hero->specialHit($monster) . " dégats à " . $monster->getName() . " grâce à son attaque spéciale ⭐";
-            } else {
-                $fightResult[] = "<td class='bg-info'>" . $hero->getName() . " inflige " . $hero->hit($monster) . " dégats à " . $monster->getName();
-            }
-
-
-            if($monster->getLifePoint() <= 0) {
-                $fightResult[] = "<td class='bg-danger'>" . $monster->getName() . " est mort";
-                break;
-            }
-
-        }
-        return $fightResult;
-
-    }
-
-
-
-
 
 }

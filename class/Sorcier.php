@@ -5,7 +5,7 @@ class Sorcier extends Monster
    public function hit(Hero $hero) : int
     {
         $damage = rand(0, 50);
-        if($hero instanceof Fantassin) {
+        if($hero instanceof Guerrier) {
             $damage *= 2;
         }
         $hero->setLifePoint($hero->getLifePoint() - $damage);
